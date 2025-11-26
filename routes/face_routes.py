@@ -5,7 +5,7 @@ face_bp = Blueprint("face", __name__)
 
 @face_bp.route("/face-recognition", methods=["POST"])
 def face_recognition():
-    base64_image = request.json.get("image")
+    image_base64 = request.json.get("image")
 
-    result = recognize_face(base64_image)
+    result = recognize_face(image_base64)
     return jsonify(result)

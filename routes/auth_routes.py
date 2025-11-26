@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app import db
+from extensions import db
 from models.user import User
 
 auth_bp = Blueprint("auth", __name__)
@@ -11,11 +11,13 @@ def login():
     password = data.get("password")
 
     user = User.query.filter_by(email=email, password=password).first()
+
     if not user:
-        return jsonify({"message": "Login gagal"}), 401
+        return jsonify({"status": "error", "message": "Login gagal"}), 401
 
     return jsonify({
+        "status": "success",
         "message": "Login berhasil",
         "role": user.role,
-        "id": user.id
+        "user_id": user.id
     })
